@@ -179,3 +179,10 @@ except:
 # chirag : references
 # https://developer.tdameritrade.com/content/phase-1-authentication-update-xml-based-api
 # https://developer.tdameritrade.com/authentication/apis/post/token-0
+
+
+# chirag: architechture
+# client is python app engine where server is running.
+# when access_token not working, simply use the refresh_token to get new access_token. this refresh and access lies in firestoredb
+# when refresh_token is not working, big problem. essentially run the google cloud function to get refresh_token again. which btw will involve getting auth_code and ui_auth
+# that way values in the database are always fresh.
