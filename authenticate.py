@@ -176,3 +176,6 @@ try:
         if sys.argv[1] == 'forever': forever()
 except:
     pass
+# chirag : references
+# https://developer.tdameritrade.com/content/phase-1-authentication-update-xml-based-api
+# https://developer.tdameritrade.com/authentication/apis/post/token-0
