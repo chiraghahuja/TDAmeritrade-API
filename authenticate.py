@@ -95,7 +95,7 @@ class TDAmeritradeHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     global write_tokens
-    def write_tokens(authReplytext):
+    def write_tokens(authReplytext):            # chirag: should be named : get access and refresh code from auth code. write to file.
         response = json.loads(authReplytext)
         response.setdefault('error', [None])
         if response['error'][0] == None:
@@ -106,7 +106,7 @@ class TDAmeritradeHandler(BaseHTTPRequestHandler):
             token_file.close()       
 
     global update_tokens
-    def update_tokens():
+    def update_tokens():            # chirag : should be named get access code from refresh code. write to file.
         global tokens
         global client_id
         global redirect_uri
@@ -125,7 +125,7 @@ class TDAmeritradeHandler(BaseHTTPRequestHandler):
         code = query['code'][0]
 
         #Post Access Token Request with new code
-        if code != '':
+        if code != '':                                      # chirag : should be named. get auth code after ui authentication.
             global tokens
             global client_id
             global redirect_uri
@@ -136,7 +136,7 @@ class TDAmeritradeHandler(BaseHTTPRequestHandler):
             self.wfile.write(authReply.text.encode())
 
 start_server = True
-if tokens['access_token'] != None:
+if tokens['access_token'] != None:                      
     update_tokens()
     temp = tokens
     temp.setdefault('error', [None])
@@ -145,8 +145,8 @@ if tokens['access_token'] != None:
     else:
         start_server = False
 
-if start_server:
-    try:
+if start_server:                    
+    try:                            # chirag : ui authentication.
         httpd = HTTPServer((config['HOST'], config['PORT']), TDAmeritradeHandler)
         httpd.socket = ssl.wrap_socket (httpd.socket, keyfile='key.pem', certfile='certificate.pem', server_side=True)
         webbrowser.open_new("https://auth.tdameritrade.com/auth?response_type=code&redirect_uri="+redirect_uri_encoded+"&client_id="+client_id)
